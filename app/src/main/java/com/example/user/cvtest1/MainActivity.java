@@ -6,6 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
+import org.opencv.core.Mat;
+import java.io.InputStream;
+
 
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.LoaderCallbackInterface;
@@ -17,6 +20,9 @@ import org.opencv.imgproc.Imgproc;
 
 import java.io.InputStream;
 
+
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -45,13 +51,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if(!OpenCVLoader.initDebug()) {
-            Log.d("OpenCV", "Internal OpenCV library not found. Using OpenCV Manager for Initialization");
-            OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_1_0, this, mOpenCVCallBack);
-        }else{
-            Log.d("OpenCV", "OpenCV library found inside package. Using it!");
-            mOpenCVCallBack.onManagerConnected(LoaderCallbackInterface.SUCCESS);
-        }
+        ImageView imgraw = (ImageView) findViewById(R.id.imageView1);
+        ImageView edges = (ImageView) findViewById(R.id.imageView2);
 
         InputStream stream = getResources().openRawResource(R.raw.image1);
         Bitmap bitmap = BitmapFactory.decodeStream(stream);
@@ -99,4 +100,5 @@ public class MainActivity extends AppCompatActivity {
 
     }
 }
+}}
 
