@@ -44,15 +44,18 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    protected static final String KEY_BITMAP = "IMAGE_PATH";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ImageView imgraw = (ImageView) findViewById(R.id.imageView1);
-        ImageView edges = (ImageView) findViewById(R.id.imageView2);
+        if(!OpenCVLoader.initDebug()) {
+            Log.d("OpenCV", "Internal OpenCV library not found. Using OpenCV Manager for Initialization");
+            OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_1_0, this, mOpenCVCallBack);
+        }else{
+            Log.d("OpenCV", "OpenCV library found inside package. Using it!");
+            mOpenCVCallBack.onManagerConnected(LoaderCallbackInterface.SUCCESS);
+        }
 
         InputStream stream = getResources().openRawResource(R.raw.image1);
         Bitmap bitmap = BitmapFactory.decodeStream(stream);
@@ -72,33 +75,6 @@ public class MainActivity extends AppCompatActivity {
         // find the imageview and draw it!
         ImageView imgEdgesIV = (ImageView) findViewById(R.id.imageEdges);
         imgEdgesIV.setImageBitmap(bitmapEdges);
-
-        //Mat gray = new Mat();
-        //Imgproc.cvtColor(imageOrig, gray, Imgproc.COLOR_BGR2GRAY);
-        //Mat edges = new Mat();
-        //Imgproc.Canny(gray, edges, 50, 255);
-
-
-
-        //Imgcodecs.imwrite("output.png", gray);
-
-        //Mat rgba = new Mat();
-        //Utils.bitmapToMat(bitmap, rgba);
-
-        //Mat edges = new Mat(rgba.size(), CvType.CV_8UC1);
-        //Imgproc.cvtColor(rgba, edges, Imgproc.COLOR_RGB2GRAY, 4);
-        //Imgproc.Canny(edges, edges, 50, 255);
-
-
-        //if (!OpenCVLoader.initDebug()) {
-        //    Log.e(this.getClass().getSimpleName(), "OPENCV not working");
-        //} else {
-        //    Log.d(this.getClass().getSimpleName(), "OPENCV working");
-        //}
-
-
-
     }
 }
-}}
 
