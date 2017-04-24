@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         Bitmap bitmap = BitmapFactory.decodeStream(stream);
 
         ImageView imgOrigIV = (ImageView) findViewById(R.id.imageOriginal);
-        //imgOrigIV.setImageBitmap(bitmap);
+        imgOrigIV.setImageBitmap(bitmap);
 
         Mat imgOrigMat = new Mat();
         Utils.bitmapToMat(bitmap, imgOrigMat);
