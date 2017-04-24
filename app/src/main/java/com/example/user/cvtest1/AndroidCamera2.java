@@ -43,6 +43,19 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.OutputStream;
+
+import android.content.ContentResolver;
+import android.content.ContentUris;
+import android.content.ContentValues;
+import android.graphics.Bitmap;
+import android.graphics.Matrix;
+import android.net.Uri;
+import android.provider.MediaStore;
+import android.provider.MediaStore.Images;
+
 public class AndroidCamera2 extends AppCompatActivity {
     private static final String TAG = "AndroidCameraApi";
     private Button takePictureButton;
@@ -66,6 +79,7 @@ public class AndroidCamera2 extends AppCompatActivity {
     private boolean mFlashSupported;
     private Handler mBackgroundHandler;
     private HandlerThread mBackgroundThread;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +87,7 @@ public class AndroidCamera2 extends AppCompatActivity {
         textureView = (TextureView) findViewById(R.id.texture);
         assert textureView != null;
         textureView.setSurfaceTextureListener(textureListener);
+        textureView.setRotation(-90.f);
         takePictureButton = (Button) findViewById(R.id.btn_takepicture);
         assert takePictureButton != null;
         takePictureButton.setOnClickListener(new View.OnClickListener() {
@@ -325,4 +340,20 @@ public class AndroidCamera2 extends AppCompatActivity {
         stopBackgroundThread();
         super.onPause();
     }
+
+    /*need this to save to gallery
+    private void galleryAddPic() {
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        File f = new File(mCurrentPhotoPath);
+        Uri contentUri = Uri.fromFile(f);
+        mediaScanIntent.setData(contentUri);
+        this.sendBroadcast(mediaScanIntent);
+    }*/
+
+
+
+
+
 }
+
+
