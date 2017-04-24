@@ -29,8 +29,8 @@ public class FirstActivity extends AppCompatActivity {
             }
         });
 
-        final Button button4 = (Button) findViewById(R.id.button4);
-        button4.setOnClickListener(new View.OnClickListener() {
+        final Button button5 = (Button) findViewById(R.id.button5);
+        button5.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent();
 // Show only images, no videos or anything else
