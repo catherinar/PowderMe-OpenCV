@@ -30,14 +30,8 @@ public class FirstActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first);
 
-        final Button btnDemo = (Button) findViewById(R.id.button2);
         final Button btnGallery = (Button) findViewById(R.id.button5);
 
-        btnDemo.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                startActivity(new Intent(FirstActivity.this, MainActivity.class));
-            }
-        });
 
         btnGallery.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

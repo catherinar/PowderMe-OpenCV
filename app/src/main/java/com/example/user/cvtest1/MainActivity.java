@@ -1,5 +1,6 @@
 package com.example.user.cvtest1;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -7,6 +8,8 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import org.opencv.core.Mat;
 import java.io.IOException;
@@ -45,6 +48,15 @@ public class MainActivity extends AppCompatActivity {
 
 
         setContentView(R.layout.activity_main);
+
+        final Button button = (Button) findViewById(R.id.button);
+
+
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, ColorActivity.class));
+            }
+        });
 
         if(!OpenCVLoader.initDebug()) {
             Log.d("OpenCV", "Internal OpenCV library not found. Using OpenCV Manager for Initialization");
