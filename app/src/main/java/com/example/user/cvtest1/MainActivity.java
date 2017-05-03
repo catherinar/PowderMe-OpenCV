@@ -2,27 +2,21 @@ package com.example.user.cvtest1;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 import org.opencv.core.Mat;
-import java.io.InputStream;
-
-
+import java.io.IOException;
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
 import org.opencv.android.Utils;
 import org.opencv.core.CvType;
-import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
-
 import java.io.InputStream;
-
-
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -47,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+
         setContentView(R.layout.activity_main);
 
         if(!OpenCVLoader.initDebug()) {
@@ -57,8 +54,22 @@ public class MainActivity extends AppCompatActivity {
             mOpenCVCallBack.onManagerConnected(LoaderCallbackInterface.SUCCESS);
         }
 
-        InputStream stream = getResources().openRawResource(R.raw.image1);
-        Bitmap bitmap = BitmapFactory.decodeStream(stream);
+        Bitmap bitmap = null;
+
+        Bundle extras = getIntent().getExtras();
+        if(!extras.isEmpty()) {
+            Uri imageUri = Uri.parse(extras.getString(FirstActivity.PICTURE_INTENT_EXTRA));
+            String filePath = extras.getString("FILE");
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else{
+            InputStream stream = getResources().openRawResource(R.raw.image1);
+            bitmap = BitmapFactory.decodeStream(stream);
+        }
+
 
         ImageView imgOrigIV = (ImageView) findViewById(R.id.imageOriginal);
         imgOrigIV.setImageBitmap(bitmap);

@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Cvtest1</string>
     <string name="title_activity_main2">Main2Activity</string>
+    <string name="galery">Choose Picture</string>
+    <string name="example">example</string>
+    <string name="gallery_intent_header">Select Picture</string>
 </resources>
