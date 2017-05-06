@@ -1,6 +1,8 @@
 package com.example.user.cvtest1;
 
+import android.content.CursorLoader;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -22,6 +24,9 @@ import org.opencv.imgproc.Imgproc;
 import java.io.InputStream;
 
 public class MainActivity extends AppCompatActivity {
+
+    public final static  String PICTURE_INTENT_EXTRA = "PICTURE_TO_USE";
+    private Uri imageUri;
 
     private BaseLoaderCallback mOpenCVCallBack = new BaseLoaderCallback(this) {
 
@@ -49,12 +54,14 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-        final Button button = (Button) findViewById(R.id.button);
+        final Button colorButton = (Button) findViewById(R.id.colorButton);
 
 
-        button.setOnClickListener(new View.OnClickListener() {
+        colorButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, ColorActivity.class));
+                //startActivity(new Intent(MainActivity.this, ColorActivity.class));
+
+                startColorApp();
             }
         });
 
@@ -70,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         if(!extras.isEmpty()) {
-            Uri imageUri = Uri.parse(extras.getString(FirstActivity.PICTURE_INTENT_EXTRA));
+            imageUri = Uri.parse(extras.getString(FirstActivity.PICTURE_INTENT_EXTRA));
             String filePath = extras.getString("FILE");
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
@@ -98,6 +105,24 @@ public class MainActivity extends AppCompatActivity {
         // find the imageview and draw it!
         ImageView imgEdgesIV = (ImageView) findViewById(R.id.imageEdges);
         imgEdgesIV.setImageBitmap(bitmapEdges);
+    }
+
+    private String getRealPathFromURI(Uri contentUri) {
+        String[] proj = { MediaStore.Images.Media.DATA };
+        CursorLoader loader = new CursorLoader(MainActivity.this, contentUri, proj, null, null, null);
+        Cursor cursor = loader.loadInBackground();
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        String result = cursor.getString(column_index);
+        cursor.close();
+        return result;
+    }
+
+    protected void startColorApp(){
+        Intent intent = new Intent(MainActivity.this, ColorActivity.class);
+        intent.putExtra(PICTURE_INTENT_EXTRA, imageUri.toString());
+        intent.putExtra("IMAGE", getRealPathFromURI(imageUri));
+        startActivity(intent);
     }
 }
 
