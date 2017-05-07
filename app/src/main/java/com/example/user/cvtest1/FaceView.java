@@ -6,10 +6,13 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
+import android.graphics.PointF;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.SparseArray;
 import android.view.View;
+import android.graphics.Path;
 
 import com.google.android.gms.vision.face.Face;
 import com.google.android.gms.vision.face.Landmark;
@@ -73,18 +76,65 @@ public class FaceView extends View {
      * pupil position.
      */
     private void drawFaceAnnotations(Canvas canvas, double scale) {
-        Paint paint = new Paint();
-        paint.setColor(Color.GREEN);
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeWidth(5);
+        PointF leftMPoint = new PointF();
+        PointF rightMPoint = new PointF();
+        PointF bottomMPoint = new PointF();
 
         for (int i = 0; i < mFaces.size(); ++i) {
             Face face = mFaces.valueAt(i);
             for (Landmark landmark : face.getLandmarks()) {
-                int cx = (int) (landmark.getPosition().x * scale);
-                int cy = (int) (landmark.getPosition().y * scale);
-                canvas.drawCircle(cx, cy, 10, paint);
+                if((landmark.getType() == landmark.BOTTOM_MOUTH) || (landmark.getType() == landmark.LEFT_MOUTH) || (landmark.getType() == landmark.RIGHT_MOUTH)){
+                    int cx = (int) (landmark.getPosition().x * scale);
+                    int cy = (int) (landmark.getPosition().y * scale);
+
+                    if(landmark.getType() == landmark.BOTTOM_MOUTH) {
+                        bottomMPoint.x = cx;
+                        bottomMPoint.y = cy;
+                    }
+                    if (landmark.getType() == landmark.LEFT_MOUTH) {
+                        leftMPoint.x = cx;
+                        leftMPoint.y = cy;
+                    }
+                    if (landmark.getType() == landmark.RIGHT_MOUTH){
+                        rightMPoint.x = cx;
+                        rightMPoint.y = cy;
+                    }
+
+                }else{
+                    //Do nothing
+                }
             }
         }
+
+//        Paint paint = new Paint();
+//        paint.setColor(Color.GREEN);
+//        paint.setStyle(Paint.Style.STROKE);
+//        paint.setStyle(Paint.Style.FILL_AND_STROKE);
+//        paint.setStrokeWidth(5);
+
+        Paint paint = new Paint();
+
+        paint.setStrokeWidth(5);
+        paint.setColor(android.graphics.Color.GREEN);
+        paint.setStyle(Paint.Style.FILL_AND_STROKE);
+        paint.setAntiAlias(true);
+
+        //Point 1 left mouth
+        //Point 2 right Mouth
+        //Point 3 Bottom Mouth
+        Path path = new Path();
+        path.setFillType(Path.FillType.EVEN_ODD);
+        path.moveTo(leftMPoint.x, leftMPoint.y);
+        path.lineTo(rightMPoint.x, rightMPoint.y);
+        path.moveTo(rightMPoint.x, rightMPoint.y);
+        path.lineTo(bottomMPoint.x, bottomMPoint.y);
+        path.moveTo(bottomMPoint.x, bottomMPoint.y);
+        path.lineTo(leftMPoint.x, leftMPoint.y);
+        path.close();
+
+        canvas.drawPath(path, paint);
+
+
+
     }
 }
