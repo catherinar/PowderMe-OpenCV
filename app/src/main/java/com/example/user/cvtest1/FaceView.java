@@ -13,6 +13,7 @@ import android.view.View;
 
 import com.google.android.gms.vision.face.Face;
 import com.google.android.gms.vision.face.Landmark;
+import com.google.android.gms.vision.face.internal.client.LandmarkParcel;
 
 /**
  * View which displays a bitmap containing a face along with overlay graphics that identify the
