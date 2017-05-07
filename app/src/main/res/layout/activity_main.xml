@@ -17,7 +17,7 @@
         android:layout_height="150dp"
         android:layout_alignParentStart="true" />
 
-    <com.google.android.gms.samples.vision.face.photo.FaceView
+    <ImageView
         android:id="@+id/imageEdges"
         android:layout_width="match_parent"
         android:layout_height="150dp"
