@@ -49,19 +49,20 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-
         setContentView(R.layout.activity_main);
 
         final Button colorButton = (Button) findViewById(R.id.colorButton);
-
+        final Button lipDetectionButton = (Button) findViewById(R.id.lipDetectButton);
 
         colorButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //startActivity(new Intent(MainActivity.this, ColorActivity.class));
-
                 startColorApp();
+            }
+        });
+
+        lipDetectionButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                startLipDetectionApp();
             }
         });
 
@@ -102,7 +103,6 @@ public class MainActivity extends AppCompatActivity {
         Bitmap bitmapEdges = Bitmap.createBitmap(imgOrigMat.cols(), imgOrigMat.rows(),Bitmap.Config.ARGB_8888);
         Utils.matToBitmap(edgesMat, bitmapEdges);
 
-        // find the imageview and draw it!
         ImageView imgEdgesIV = (ImageView) findViewById(R.id.imageEdges);
         imgEdgesIV.setImageBitmap(bitmapEdges);
     }
@@ -120,6 +120,12 @@ public class MainActivity extends AppCompatActivity {
 
     protected void startColorApp(){
         Intent intent = new Intent(MainActivity.this, ColorActivity.class);
+        intent.putExtra(PICTURE_INTENT_EXTRA, imageUri.toString());
+        intent.putExtra("IMAGE", getRealPathFromURI(imageUri));
+        startActivity(intent);
+    }
+    protected void startLipDetectionApp(){
+        Intent intent = new Intent(MainActivity.this, LipDetection.class);
         intent.putExtra(PICTURE_INTENT_EXTRA, imageUri.toString());
         intent.putExtra("IMAGE", getRealPathFromURI(imageUri));
         startActivity(intent);
