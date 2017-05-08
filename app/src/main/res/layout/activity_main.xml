@@ -33,12 +33,4 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@id/imageEdges"/>
 
-    <Button
-        android:id="@+id/lipDetectButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Detect Lips"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/colorButton"/>
-
 </RelativeLayout>

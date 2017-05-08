@@ -26,6 +26,7 @@ import com.google.android.gms.vision.face.internal.client.LandmarkParcel;
 public class FaceView extends View {
     private Bitmap mBitmap;
     private SparseArray<Face> mFaces;
+    public static int color;
 
     public FaceView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -34,9 +35,10 @@ public class FaceView extends View {
     /**
      * Sets the bitmap background and the associated face detections.
      */
-    void setContent(Bitmap bitmap, SparseArray<Face> faces) {
+    void setContent(Bitmap bitmap, SparseArray<Face> faces, int chosenColor) {
         mBitmap = bitmap;
         mFaces = faces;
+        color = chosenColor;
         invalidate();
     }
 
@@ -113,7 +115,7 @@ public class FaceView extends View {
         Paint paint = new Paint();
 
         paint.setStrokeWidth(5);
-        paint.setColor(android.graphics.Color.GREEN);
+        paint.setColor(color);
         paint.setStyle(Paint.Style.FILL_AND_STROKE);
         paint.setAntiAlias(true);
 

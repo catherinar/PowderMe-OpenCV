@@ -10,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.SparseArray;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -23,10 +25,40 @@ import java.io.InputStream;
 
 public class ColorActivity extends AppCompatActivity {
 
+    public static int color = android.graphics.Color.GREEN;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_color);
+
+        final Button redButton = (Button) findViewById(R.id.redButton);
+        final Button greenButton = (Button) findViewById(R.id.greenButton);
+        final Button blueButton = (Button) findViewById(R.id.blueButton);
+
+        redButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                color = android.graphics.Color.RED;
+                finish();
+                startActivity(getIntent());
+            }
+        });
+
+        greenButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                color = android.graphics.Color.GREEN;
+                finish();
+                startActivity(getIntent());
+            }
+        });
+
+        blueButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                color = android.graphics.Color.BLUE;
+                finish();
+                startActivity(getIntent());
+            }
+        });
 
 
         Bitmap bitmap = null;
@@ -45,8 +77,8 @@ public class ColorActivity extends AppCompatActivity {
             bitmap = BitmapFactory.decodeStream(stream);
         }
 
-        ImageView imgOrigIV = (ImageView) findViewById(R.id.withoutColor);
-        imgOrigIV.setImageBitmap(bitmap);
+        //ImageView imgOrigIV = (ImageView) findViewById(R.id.withoutColor);
+        //imgOrigIV.setImageBitmap(bitmap);
 
         //Bitmap bitmap = BitmapFactory.decodeStream(stream);
 
@@ -103,7 +135,7 @@ public class ColorActivity extends AppCompatActivity {
 
 
         FaceView overlay = (FaceView) findViewById(R.id.withColor);
-        overlay.setContent(bitmap, faces);
+        overlay.setContent(bitmap, faces, color);
 
         // Although detector may be used multiple times for different images, it should be released
         // when it is no longer needed in order to free native resources.

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -13,12 +13,12 @@
     tools:context="com.example.user.cvtest1.ColorActivity">
 
     <!--<TextView-->
-        <!--android:id="@+id/ColorText"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="This is the color activity! ^-^"/>-->
+    <!--android:id="@+id/ColorText"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="This is the color activity! ^-^"/>-->
 
-    <ImageView
+    <!--<ImageView
         android:id="@+id/withoutColor"
         android:layout_width="0dp"
         android:layout_height="150dp"
@@ -28,21 +28,39 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="16dp" />-->
 
     <com.example.user.cvtest1.FaceView
         android:id="@+id/withColor"
-        android:layout_width="0dp"
-        android:layout_height="250dp"
+        android:layout_width="wrap_content"
+        android:layout_height="225dp"
         android:layout_alignParentStart="true"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintBottom_creator="1"
-        android:layout_marginStart="6dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginEnd="6dp"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:layout_constraintLeft_creator="1"
-        android:layout_marginBottom="29dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        android:foregroundGravity="center_horizontal"
+        />
 
-</android.support.constraint.ConstraintLayout>
+    <Button
+        android:id="@+id/greenButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Green"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/withColor" />
+
+    <Button
+        android:id="@+id/redButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Red"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/greenButton" />
+
+    <Button
+        android:id="@+id/blueButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Blue"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/redButton" />
+
+
+</RelativeLayout>

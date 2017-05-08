@@ -52,17 +52,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         final Button colorButton = (Button) findViewById(R.id.colorButton);
-        final Button lipDetectionButton = (Button) findViewById(R.id.lipDetectButton);
 
         colorButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 startColorApp();
-            }
-        });
-
-        lipDetectionButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                startLipDetectionApp();
             }
         });
 
@@ -120,12 +113,6 @@ public class MainActivity extends AppCompatActivity {
 
     protected void startColorApp(){
         Intent intent = new Intent(MainActivity.this, ColorActivity.class);
-        intent.putExtra(PICTURE_INTENT_EXTRA, imageUri.toString());
-        intent.putExtra("IMAGE", getRealPathFromURI(imageUri));
-        startActivity(intent);
-    }
-    protected void startLipDetectionApp(){
-        Intent intent = new Intent(MainActivity.this, LipDetection.class);
         intent.putExtra(PICTURE_INTENT_EXTRA, imageUri.toString());
         intent.putExtra("IMAGE", getRealPathFromURI(imageUri));
         startActivity(intent);

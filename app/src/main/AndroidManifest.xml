@@ -43,8 +43,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".FdActivity" />
-        <activity android:name=".LipDetection" />
         <activity android:name=".ColorActivity"></activity>
     </application>
 
