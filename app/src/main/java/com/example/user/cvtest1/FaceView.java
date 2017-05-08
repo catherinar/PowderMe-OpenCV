@@ -13,6 +13,7 @@ import android.util.AttributeSet;
 import android.util.SparseArray;
 import android.view.View;
 import android.graphics.Path;
+import android.graphics.Canvas.VertexMode;
 
 import com.google.android.gms.vision.face.Face;
 import com.google.android.gms.vision.face.Landmark;
@@ -106,11 +107,8 @@ public class FaceView extends View {
             }
         }
 
-//        Paint paint = new Paint();
-//        paint.setColor(Color.GREEN);
-//        paint.setStyle(Paint.Style.STROKE);
-//        paint.setStyle(Paint.Style.FILL_AND_STROKE);
-//        paint.setStrokeWidth(5);
+
+
 
         Paint paint = new Paint();
 
@@ -119,20 +117,37 @@ public class FaceView extends View {
         paint.setStyle(Paint.Style.FILL_AND_STROKE);
         paint.setAntiAlias(true);
 
-        //Point 1 left mouth
-        //Point 2 right Mouth
-        //Point 3 Bottom Mouth
-        Path path = new Path();
-        path.setFillType(Path.FillType.EVEN_ODD);
-        path.moveTo(leftMPoint.x, leftMPoint.y);
-        path.lineTo(rightMPoint.x, rightMPoint.y);
-        path.moveTo(rightMPoint.x, rightMPoint.y);
-        path.lineTo(bottomMPoint.x, bottomMPoint.y);
-        path.moveTo(bottomMPoint.x, bottomMPoint.y);
-        path.lineTo(leftMPoint.x, leftMPoint.y);
-        path.close();
+        float [] points  = new float[8];
+        points[0] = rightMPoint.x;
+        points[1] = rightMPoint.y;
+        points[2] = leftMPoint.x;
+        points[3] = leftMPoint.y;
+        points[4] = bottomMPoint.x;
+        points[5] = bottomMPoint.y;
+        points[6] = rightMPoint.x;
+        points[7] = rightMPoint.y;
 
-        canvas.drawPath(path, paint);
+        canvas.drawVertices(VertexMode.TRIANGLES, 8, points, 0, null, 0, null, 0, null, 0, 0, paint);
+        Path path = new Path();
+        path.moveTo(rightMPoint.x , rightMPoint.y);
+        path.lineTo(leftMPoint.x,leftMPoint.y);
+        path.lineTo(bottomMPoint.x,bottomMPoint.y);
+        canvas.drawPath(path,paint);
+//
+//        //Point 1 left mouth
+//        //Point 2 right Mouth
+//        //Point 3 Bottom Mouth
+//        Path path = new Path();
+//        path.setFillType(Path.FillType.EVEN_ODD);
+//        path.moveTo(rightMPoint.x, rightMPoint.y);
+//        path.lineTo(leftMPoint.x, leftMPoint.y);
+//        path.moveTo(leftMPoint.x, leftMPoint.y);
+//        path.lineTo(bottomMPoint.x, bottomMPoint.y);
+//        path.moveTo(bottomMPoint.x, bottomMPoint.y);
+//        path.lineTo(rightMPoint.x, rightMPoint.y);
+//        path.close();
+//
+//        canvas.drawPath(path, paint);
 
 
 
